@@ -2,9 +2,10 @@
 //* INIT SESSION
 session_start();
 
+require('database.php');
+
 $error = array('username'=>'', 'password'=>'');
-$logOk = false;
-$msg = '';
+
 
 if (isset($_POST['login'])) {
     if (!empty($_POST['username'])) {
@@ -21,8 +22,16 @@ if (isset($_POST['login'])) {
         $error['password'] = 'You need to put your password';
         
     }
-    if (in_array(true, $logOk)) {
-        echo "username, password oki";
+    if (!empty($username) && !empty($password)) {
+        $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
+        if ($conn) {
+            $query = "SELECT username, password FROM users";
+            $sendRequest = mysqli_query($conn, $query);
+            $users = mysqli_fetch_all($sendRequest, MYSQLI_ASSOC);
+            var_dump($users);
+        }else{
+            $msg = 'Connection failed to the server, contact us if persist';
+        }
     }else{
         echo "there are error";
     }
