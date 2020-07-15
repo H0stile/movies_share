@@ -2,7 +2,7 @@
 
 //  I call the database & navbar files
 require_once ('database.php'); 
-//require_once ('navbar.php');
+require_once ('navbar.php');
 
 $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
 
