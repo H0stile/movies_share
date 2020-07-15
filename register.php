@@ -5,7 +5,7 @@ require_once ('database.php');
 require_once ('navbar.php');
 
 if($conn){
-
+ test
 
 }
 
