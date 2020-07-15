@@ -34,7 +34,7 @@ if (isset($_POST['login'])) {
             $users = mysqli_fetch_all($sendRequest, MYSQLI_ASSOC);
             mysqli_close($conn);
         }else{
-            $errors = 'Connection failed to the server, contact us if persist';
+            $errors['connection'] = 'Connection failed to the server, contact us if persist';
         }
         //* FOUND THE USER
         foreach ($users as $user) {
