@@ -71,7 +71,7 @@ if (isset($_POST['login'])) {
 <body>
 
     <?php
-        // include_once 'navbar.php';
+        include_once 'navbar.php';
     ?>
     <h1>Login page</h1>
     <form method="POST">
