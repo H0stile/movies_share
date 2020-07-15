@@ -1,0 +1,16 @@
+*{
+    box-sizing: border-box;
+    margin: 0em;
+    padding: 0em;
+
+}
+
+.movie-card{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+}
+
+.movie-card img{
+    width: 200px;
+}
