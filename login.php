@@ -5,7 +5,6 @@ session_start();
 $error = array('username'=>'', 'password'=>'');
 $logOk = false;
 $msg = '';
-$emailVal = '';
 
 if (isset($_POST['login'])) {
     if (!empty($_POST['username'])) {
@@ -13,14 +12,20 @@ if (isset($_POST['login'])) {
         $username = strip_tags($username);
     }else{
         $error['username'] = 'You need to put a username';
+        
     }
     if (!empty($_POST['password'])) {
         $password = trim($_POST['password']);
         $password = strip_tags($password);
     }else{
         $error['password'] = 'You need to put your password';
+        
     }
- 
+    if (in_array(true, $logOk)) {
+        echo "username, password oki";
+    }else{
+        echo "there are error";
+    }
 }
 
 ?>
