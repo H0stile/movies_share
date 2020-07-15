@@ -14,3 +14,9 @@
 .movie-card img{
     width: 200px;
 }
+
+.home-genre {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+}

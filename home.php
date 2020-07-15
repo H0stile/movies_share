@@ -1,7 +1,7 @@
 <?php
 
 require_once ('database.php'); 
-//require_once ('navbar.php');
+require_once ('navbar.php');
 
 $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
 
@@ -9,10 +9,9 @@ if($conn){
 
     $query = 'SELECT * FROM movies ORDER BY movie_id DESC LIMIT 4';
     $result = mysqli_query($conn, $query);
-    //$query_test = 'SELECT SUM(categ.movies) FROM movies INNER JOIN categ ON categ.categ_id = movies.categ_id ORDER BY categ_id';
-    //$result_test = mysqli_query($conn, $query_genre);
-    $query_genre = 'SELECT * FROM categ';
+    $query_genre = 'SELECT COUNT(movies.categ_id), categ.genre FROM movies INNER JOIN categ ON categ.categ_id = movies.categ_id GROUP BY genre';
     $result_genre = mysqli_query($conn, $query_genre);
+
 
     
 
@@ -34,15 +33,19 @@ if($conn){
     <h1>Movies Share</h1>
     <h2>Welcome to the best movies database !</h2>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod culpa ipsum rem architecto ex in corrupti rerum tempore reiciendis, repudiandae illum deleniti cumque reprehenderit. Minus ullam ipsa dolores quibusdam facilis.</p>
+    <br>
     <hr>
-    <section>
+    <br>
+    <section  class="home-genre">
     <?php 
         while ($genre = mysqli_fetch_assoc($result_genre)){
-            echo '<span> ' . $genre['genre'] . ' </span>';
+            echo '<span> ' . $genre['genre'] . ' ' . '(' . $genre['COUNT(movies.categ_id)'] . ')' . ' </span>';
         }
     ?>
     </section>
+    <br>
     <hr>
+    <br>
     <section class="movie-card">
     <?php 
     while ($home_movies = mysqli_fetch_assoc($result)){
