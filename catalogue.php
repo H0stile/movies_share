@@ -9,7 +9,7 @@ $errors = array('connection'=>'');
 
 //* GET THE MOVIES
 $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
-
+$movies = array();
 $query = "SELECT * FROM movies ORDER BY movie_id ASC";
 
 if ($conn) {
@@ -19,7 +19,15 @@ if ($conn) {
     }
     $sendRequest = mysqli_query($conn, $query);
     $movies = mysqli_fetch_all($sendRequest, MYSQLI_ASSOC);
-    // var_dump($movies);
+    
+    //* INSERT NEW MOVIE IN PLAYLIST
+    if (isset($_POST['addPlaylist']) && !empty((isset($_SESSION['user_id'])))) {
+        $pushmovie2PL = $_POST['selectMoviePL'];
+        $PL = explode('-', $pushmovie2PL)[0];
+        $MOVIEsel = explode('-', $pushmovie2PL)[1];
+        $query = "INSERT INTO playlist_content (playlist_id, movie_id) VALUE ($PL, $MOVIEsel)";
+        // $sendRequest = mysqli_query($conn, $query);
+        }
 
 }else{
     $errors['connection'] = 'Connection failed to the server, contact us if persist';
@@ -68,9 +76,37 @@ if ($conn) {
                 </div>
                 <form method="GET">
                     <input type="submit" name="details" value="Details">
-                    <input type="submit" name="modify" value="Modify">
-                    <input type="submit" name="addPlaylist" value="Add to playlist">
+                    <?php 
+                    if (isset($_GET['details'])) {
+                        $movieId = $movie['movie_id'];
+                        header("location: details.php?id=$movieId");
+                    }
+                    ?>
+                    <input type="submit" name="edit" value="Edit">
+                    <?php
+                    if (isset($_GET['edit'])) {
+                        $movieId = $movie['movie_id'];
+                        header("location: modifymovies.php?id=$movieId");
+                    }
+                    ?>
                 </form>
+                <form method="POST">
+                    <?php
+                    if (!empty((isset($_SESSION['user_id'])))) {
+                        echo '<select name="selectMoviePL" id="">';
+                        foreach ($myPlaylist as $currentPlaylist) {
+                            echo '<option value="">placeholder</option>';
+                        }
+                        //*TEMP
+                        echo '<option value="">placeholder</option>';
+                        //*TEMP
+                        echo '</select>';
+                        echo '<input type="submit" name="addPlaylist" value="Add to playlist">';
+                    }else{
+                        echo '';
+                    }
+                    ?>
+               </form>
             </div>
         <?php endforeach; ?>
     </section>
