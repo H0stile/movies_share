@@ -2,7 +2,9 @@
 
 //  I call the database & navbar files
 require_once ('database.php'); 
-require_once ('navbar.php');
+//require_once ('navbar.php');
+
+$conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
 
 if($conn){
     //  I declare my variables
@@ -18,7 +20,7 @@ if($conn){
       //    Retrieve and sanitize all the datas
       $firstName = htmlspecialchars(trim($_POST['firstName']));
       $lastName = htmlspecialchars(trim($_POST['lastName']));
-      $email = htmlspecialchars(trim($_POST['lastName']));
+      $email = htmlspecialchars(trim($_POST['email']));
       $password = htmlspecialchars(trim($_POST['password']));
       $passwordConfirm = htmlspecialchars(trim($_POST['passwordConfirm']));
 
@@ -30,7 +32,7 @@ if($conn){
     }else{
         $errMess = $errMess . '<li>' . 'Your first name should between 3 and 15 characters !' . '</li>';
     }
-    if(strlen($lastName) >= 3 && strlen($lasstName) <= 25){
+    if(strlen($lastName) >= 3 && strlen($lastName) <= 25){
         $bool_lastName = true;
     }else{
         $errMess = $errMess . '<li>' . 'Your last name should between 3 and 25 characters !' . '</li>';
@@ -55,7 +57,7 @@ if($conn){
 
     if($bool_firstName && $bool_lastName && $bool_email && $bool_password && $bool_passwordConfirm){
         $hashPassword = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "INSERT INTO users (first_name, last_name, email, password) VALUES ('".$firstName."','".$lastName."','".$validEmail."','".$password."')";
+        $sql = "INSERT INTO users (first_name, last_name, username, password) VALUES ('".$firstName."','".$lastName."','".$validEmail."','".$hashPassword."')";
     
         $result = mysqli_query($conn,$sql);
         echo 'You are registered!';
@@ -84,7 +86,7 @@ mysqli_close($conn);
     <section>
         <form action="" method="POST">
             <input type="text" name="firstName" placeholder="Your first name...">
-            <input type="text" name="lastName" placeholder="Your first name...">
+            <input type="text" name="lastName" placeholder="Your last name...">
             <input type="email" name="email" placeholder="Your e-mail address...">
             <input type="password" name="password" placeholder="Your password...">
             <input type="password" name="passwordConfirm" placeholder="Your password...">
