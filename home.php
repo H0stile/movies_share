@@ -32,7 +32,7 @@ if($conn){
 </head>
 <body>
     <section id="home-content-box">
-        <h1>Movies Share</h1>
+        <h1>MovieShare</h1>
         <h2>Welcome to the best movies database !</h2>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod culpa ipsum rem architecto ex in corrupti rerum tempore reiciendis, repudiandae illum deleniti cumque reprehenderit. Minus ullam ipsa dolores quibusdam facilis.</p>
         
