@@ -1,22 +1,39 @@
 <?php
 //* INIT SESSION
 session_start();
-
+require('navbar.php');
 require('database.php');
 
 //* DECLARE VAR
 $errors = array('connection'=>'');
 // var_dump($_SESSION['user_id']);
 
-//* GET THE MOVIES
+//* GET THE ARRAY LENGHT
 $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
+$queryLenght = "SELECT COUNT(*) AS nbrMovies FROM movies";
+$sendRequestLenght = mysqli_query($conn, $queryLenght);
+$result = mysqli_fetch_assoc($sendRequestLenght);
+// echo $result['nbrMovies'];
+
+
+if (!empty($_GET)) {
+    $page = $_GET['page'];
+    $limit = 2;
+    $offset = 2*($page-1);
+    $nbrPages = $result % $limit;
+}else{
+    $limit = $result;
+    $offset = '0';
+}
+
+//* GET THE MOVIES
 $movies = array();
-$query = "SELECT * FROM movies ORDER BY movie_id ASC";
+$query = "SELECT * FROM movies ORDER BY movie_id ASC LIMIT $limit OFFSET $offset";
 
 if ($conn) {
     if (isset($_POST['sort'])) {
         $sort = $_POST['orderBy'];
-        $query = "SELECT * FROM movies ORDER BY movie_id $sort";
+        $query = "SELECT * FROM movies ORDER BY movie_id $sort LIMIT $limit OFFSET $offset";
     }
     $sendRequest = mysqli_query($conn, $query);
     $movies = mysqli_fetch_all($sendRequest, MYSQLI_ASSOC);
@@ -58,9 +75,6 @@ if (isset($_GET['details'])) {
     <title>Movies Share : Catalogue</title>
 </head>
 <body>
-    <?php
-        require('navbar.php');
-    ?>
     <hr>
     <section>
         <form method="POST">
@@ -70,6 +84,10 @@ if (isset($_GET['details'])) {
             </select>
             <input type="submit" name="sort" value="sort">
         </form>
+        <div>
+            <a href="catalogue.php?page=1">
+
+        </div>
     </section>
     <hr>
     <!-- DISPLAYING THE MOVIES -->
