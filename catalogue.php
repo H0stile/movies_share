@@ -85,7 +85,6 @@ if (isset($_GET['details'])) {
             <input type="submit" name="sort" value="sort">
         </form>
         <div>
-            <a href="catalogue.php?page=1">
 
         </div>
     </section>
