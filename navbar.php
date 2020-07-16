@@ -14,7 +14,7 @@
         <a href="home.php">Home</a>
         <a href="catalogue.php">Catalogue</a>
         <?php
-            if (isset($_SESSION['admin']) && $_SESSION['admin']=='yes' && isset($_SESSION['user_id'])) {
+            if (isset($_SESSION['user_id'])) {
                 echo '<a href="playlists.php">Playlists</a>';
             }else{
                 echo '';
