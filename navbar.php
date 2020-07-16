@@ -7,17 +7,24 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 
-<nav id="navbar">
-    <div id="navBar-content">
-        <h1>MovieShare</h1>
-        <section>
-            <a href="home.php">Home</a>
-            <a href="catalogue.php">Catalogue</a>
-            <a href="playlists.php">Playlists</a>
-            <a href="manageCategories.php">Manage categories</a>
-            <a href="addMovie.php">Add a movie</a>
-       
-    
+<nav>
+    <a href="home.php">Home</a>
+    <a href="catalogue.php">Catalogue</a>
+    <a href="playlists.php">Playlists</a>
+    <?php
+        if (isset($_SESSION['admin']) && $_SESSION['admin']=='yes' && isset($_SESSION['user_id'])) {
+            echo '<a href="addcateg.php">Manage categories</a>';
+        }else{
+            echo '';
+        }
+    ?>
+    <?php
+        if (isset($_SESSION['admin']) && $_SESSION['admin']=='yes' && isset($_SESSION['user_id'])) {
+            echo '<a href="modifymovies.php">Add a movie</a>';
+        }else{
+            echo '';
+        }
+    ?>
     <?php
     if (!isset($_SESSION['user_id'])) {
         echo '<a href="register.php">Register</a>';

@@ -20,6 +20,8 @@ $dateVal = '';
 $synopsisVal = '';
 $posterVal = '';
 
+
+
 if (isset($_GET['id'])) {
     $idMovie = $_GET['id'];
     $queryMovie = "SELECT * FROM movies WHERE movie_id=$idMovie";
@@ -30,7 +32,6 @@ if (isset($_GET['id'])) {
     $synopsisVal = $currentMovie['synopsis'];
     $posterVal = $currentMovie['poster'];
     $categVal = $currentMovie['categ_id'];
-    
 }
 
 if(isset($_POST['submit'])){
@@ -64,15 +65,21 @@ if(isset($_POST['submit'])){
         $synopsis = $_POST['synopsis'];
         $poster = $_POST['poster'];
         $genre = $_POST['genre'];
-        
         $query = "INSERT INTO movies (title, release_date, synopsis, poster, categ_id) VALUE ('$title', '$date', '$synopsis', '$poster', $genre)";
+
+        if (isset($_GET['id'])) {
+            $idMovie = $_GET['id'];
+            $query = "UPDATE movies SET title = '$title', release_date = '$date', synopsis = '$synopsis', poster = '$poster', categ_id = '$genre' WHERE movie_id='$idMovie'";
+            $msg = 'movie successfully modified!';
+        }
+
         $result_query = mysqli_query($conn, $query);
+        $msg = 'movie successfully added!';
 
         if($result_query){
-    
-                echo 'movie successfully added!';
+                echo $msg;
             }else{
-                echo 'error : movie not added!';
+                echo 'error : movie not added / modified!';
             }
         }
     }
