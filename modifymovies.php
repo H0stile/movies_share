@@ -9,32 +9,37 @@ $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
 $query_genre = "SELECT * FROM categ GROUP BY genre";
 $result_query_genre = mysqli_query($conn, $query_genre);
 $my_result = mysqli_fetch_all($result_query_genre, MYSQLI_ASSOC);
+$bool_title = true;
+$bool_date = true;
+$bool_synopsis = true;
+$bool_poster = true;
+$bool_genre = true;
 
 if(isset($_POST['submit'])){
 
     if(empty($_POST['title'])){
-       
+       $bool_title = false;
 
     }
     if(empty($_POST['date'])){
-       
+        $bool_date = false;
 
     }
     if(empty($_POST['synopsis'])){
-        
+        $bool_synopsis = false;
     
     }
     if(empty($_POST['poster'])){
-       
+        $bool_poster = false;
 
     }
     
     if(empty($_POST['genre'])){
-       
+        $bool_genre = false;
     
     }
 
-    if () {
+    if ($bool_title && $bool_date && $bool_synopsis && $bool_poster && $bool_genre) {
         
         $title = $_POST['title'];
         $date = $_POST['date'];
@@ -42,7 +47,7 @@ if(isset($_POST['submit'])){
         $poster = $_POST['poster'];
         $genre = $_POST['genre'];
         
-        $query = "INSERT INTO movies (title, release_date, synopsis, poster, categ_id) VALUE ('$title', $date, '$synopsis', '$poster', $genre)";
+        $query = "INSERT INTO movies (title, release_date, synopsis, poster, categ_id) VALUE ('$title', '$date', '$synopsis', '$poster', $genre)";
         $result_query = mysqli_query($conn, $query);
 
         if($result_query){
