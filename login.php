@@ -49,9 +49,9 @@ if (isset($_POST['login'])) {
                 $_SESSION['user_id'] = $user_id;
                 $username = '';
                 $password = '';
-                var_dump($user);
-                echo $_SESSION['user_id'];
-                // header("location: account.php");
+                // var_dump($user);
+                // echo $_SESSION['user_id'];
+                header("location: home.php");
                 // exit();
             }
         }else{

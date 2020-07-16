@@ -6,6 +6,7 @@ require('database.php');
 
 //* DECLARE VAR
 $errors = array('connection'=>'');
+// var_dump($_SESSION['user_id']);
 
 //* GET THE MOVIES
 $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
@@ -19,16 +20,24 @@ if ($conn) {
     }
     $sendRequest = mysqli_query($conn, $query);
     $movies = mysqli_fetch_all($sendRequest, MYSQLI_ASSOC);
-    
+
+    //* GET PLAYLIST TO GENERATE HTML
+    if (isset($_SESSION['user_id'])) {
+        $id = $_SESSION['user_id'];
+        $query = "SELECT * FROM playlists WHERE user_id='$id'";
+        $sendRequest = mysqli_query($conn, $query);
+        $myPlaylist = mysqli_fetch_all($sendRequest, MYSQLI_ASSOC);
+    }
+
     //* INSERT NEW MOVIE IN PLAYLIST
     if (isset($_POST['addPlaylist']) && !empty((isset($_SESSION['user_id'])))) {
         $pushmovie2PL = $_POST['selectMoviePL'];
         $PL = explode('-', $pushmovie2PL)[0];
         $MOVIEsel = explode('-', $pushmovie2PL)[1];
         $query = "INSERT INTO playlist_content (playlist_id, movie_id) VALUE ($PL, $MOVIEsel)";
-        // $sendRequest = mysqli_query($conn, $query);
+        $sendRequest = mysqli_query($conn, $query);
         }
-
+    mysqli_close($conn);
 }else{
     $errors['connection'] = 'Connection failed to the server, contact us if persist';
 }
@@ -92,18 +101,17 @@ if ($conn) {
                 </form>
                 <form method="POST">
                     <?php
-                    if (!empty((isset($_SESSION['user_id'])))) {
+                    if (!empty((isset($_SESSION['user_id']))) && !count($myPlaylist) == 0) {
                         echo '<select name="selectMoviePL" id="">';
                         foreach ($myPlaylist as $currentPlaylist) {
-                            echo '<option value="">placeholder</option>';
+                            echo '<option value="'.$currentPlaylist['playlist_id'].'-'.$movie['movie_id'].'">'.$currentPlaylist['name'].'</option>';
                         }
-                        //*TEMP
-                        echo '<option value="">placeholder</option>';
-                        //*TEMP
                         echo '</select>';
                         echo '<input type="submit" name="addPlaylist" value="Add to playlist">';
+                        echo '<hr>';
                     }else{
                         echo '';
+                        echo '<hr>';
                     }
                     ?>
                </form>
