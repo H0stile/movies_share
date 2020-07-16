@@ -1,6 +1,11 @@
 <?php
 
 ?>
+
+<head>
+    <!-- <link rel="stylesheet" href="styles/style.css"> -->
+</head>
+
 <nav>
     <a href="home.php">Home</a>
     <a href="catalogue.php">Catalogue</a>

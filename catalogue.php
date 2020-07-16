@@ -41,6 +41,10 @@ if ($conn) {
 }else{
     $errors['connection'] = 'Connection failed to the server, contact us if persist';
 }
+if (isset($_GET['details'])) {
+    $movieId = $_GET['movieID'];
+    header("location: details.php?id=$movieId");
+}
 
 
 ?>
@@ -84,20 +88,9 @@ if ($conn) {
                     </p>
                 </div>
                 <form method="GET">
+                    <input type="text" name="movieID" value="<?= $movie['movie_id']?>" hidden readonly>
                     <input type="submit" name="details" value="Details">
-                    <?php 
-                    if (isset($_GET['details'])) {
-                        $movieId = $movie['movie_id'];
-                        header("location: details.php?id=$movieId");
-                    }
-                    ?>
                     <input type="submit" name="edit" value="Edit">
-                    <?php
-                    if (isset($_GET['edit'])) {
-                        $movieId = $movie['movie_id'];
-                        header("location: modifymovies.php?id=$movieId");
-                    }
-                    ?>
                 </form>
                 <form method="POST">
                     <?php
