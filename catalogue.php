@@ -13,27 +13,27 @@ $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
 $queryLenght = "SELECT COUNT(*) AS nbrMovies FROM movies";
 $sendRequestLenght = mysqli_query($conn, $queryLenght);
 $result = mysqli_fetch_assoc($sendRequestLenght);
-// echo $result['nbrMovies'];
 
-
+//* GET DATA FOR PAGINATION AND DO MAGIC COMPUTATION TO ADD THE GOOD NUMBER OF PAGES DEFINING BY NUMBER OF RESULT PER PAGES
 if (!empty($_GET)) {
     $page = $_GET['page'];
-    $limit = 2;
-    $offset = 2*($page-1);
-    $nbrPages = $result % $limit;
+    $limit = 3;
+    $offset = $limit*($page-1);
+    $nbrPages = intdiv($result['nbrMovies'], $limit)+($result['nbrMovies']%$limit);
+    $pagination = "LIMIT $limit OFFSET $offset";
 }else{
-    $limit = $result;
-    $offset = '0';
+    header("location: catalogue.php?page=1");
 }
 
 //* GET THE MOVIES
 $movies = array();
-$query = "SELECT * FROM movies ORDER BY movie_id ASC LIMIT $limit OFFSET $offset";
+$query = "SELECT * FROM movies ORDER BY movie_id ASC $pagination";
 
+//* CONNECT TO DB
 if ($conn) {
     if (isset($_POST['sort'])) {
         $sort = $_POST['orderBy'];
-        $query = "SELECT * FROM movies ORDER BY movie_id $sort LIMIT $limit OFFSET $offset";
+        $query = "SELECT * FROM movies ORDER BY movie_id $sort $pagination";
     }
     $sendRequest = mysqli_query($conn, $query);
     $movies = mysqli_fetch_all($sendRequest, MYSQLI_ASSOC);
@@ -58,9 +58,17 @@ if ($conn) {
 }else{
     $errors['connection'] = 'Connection failed to the server, contact us if persist';
 }
+
+//* GET AND PUSH THE MOVIE ID INTO URL FOR DETAILS
 if (isset($_GET['details'])) {
     $movieId = $_GET['movieID'];
     header("location: details.php?id=$movieId");
+}
+
+//* SEND TO EDIT MOVIE IF ADMIN AND LOGGED
+if (isset($_GET['edit'])) {
+    $movieId = $_GET['movieID'];
+    header("location: modifymovies.php?id=$movieId");
 }
 
 
@@ -85,7 +93,9 @@ if (isset($_GET['details'])) {
             <input type="submit" name="sort" value="sort">
         </form>
         <div>
-
+            <?php for($i=1; $i <= $nbrPages; $i++) : ?>
+                <a href="catalogue.php?page=<?=$i?>"><?=$i?></a>
+            <?php endfor; ?>
         </div>
     </section>
     <hr>
@@ -107,7 +117,8 @@ if (isset($_GET['details'])) {
                 <form method="GET">
                     <input type="text" name="movieID" value="<?= $movie['movie_id']?>" hidden readonly>
                     <input type="submit" name="details" value="Details">
-                    <input type="submit" name="edit" value="Edit">
+                    <?= (isset($_SESSION['admin']) && $_SESSION['admin']=='yes') ? '<input type="submit" name="edit" value="Edit">' : '';?> 
+                    
                 </form>
                 <form method="POST">
                     <?php
