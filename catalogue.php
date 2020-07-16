@@ -19,14 +19,20 @@ if ($conn) {
     }
     $sendRequest = mysqli_query($conn, $query);
     $movies = mysqli_fetch_all($sendRequest, MYSQLI_ASSOC);
-    
+
+    //* GET PLAYLIST TO GENERATE HTML
+    $id = $_SESSION['user_id'];
+    $query = "SELECT * FROM playlists WHERE user_id='$id'";
+    $sendRequest = mysqli_query($conn, $query);
+    $myPlaylist = mysqli_fetch_all($sendRequest, MYSQLI_ASSOC);
+
     //* INSERT NEW MOVIE IN PLAYLIST
     if (isset($_POST['addPlaylist']) && !empty((isset($_SESSION['user_id'])))) {
         $pushmovie2PL = $_POST['selectMoviePL'];
         $PL = explode('-', $pushmovie2PL)[0];
         $MOVIEsel = explode('-', $pushmovie2PL)[1];
         $query = "INSERT INTO playlist_content (playlist_id, movie_id) VALUE ($PL, $MOVIEsel)";
-        // $sendRequest = mysqli_query($conn, $query);
+        $sendRequest = mysqli_query($conn, $query);
         }
 
 }else{
@@ -95,11 +101,8 @@ if ($conn) {
                     if (!empty((isset($_SESSION['user_id'])))) {
                         echo '<select name="selectMoviePL" id="">';
                         foreach ($myPlaylist as $currentPlaylist) {
-                            echo '<option value="">placeholder</option>';
+                            echo '<option value="'.$currentPlaylist['playlist_id'].'-'.$movie['movie_id'].'">'.$currentPlaylist['name'].'</option>';
                         }
-                        //*TEMP
-                        echo '<option value="">placeholder</option>';
-                        //*TEMP
                         echo '</select>';
                         echo '<input type="submit" name="addPlaylist" value="Add to playlist">';
                     }else{

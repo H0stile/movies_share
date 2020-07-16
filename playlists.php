@@ -10,13 +10,12 @@ $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
 $errors = array('connection'=>'');
 
 
-if ($conn && !empty((isset($_SESSION['idUser'])))) {
-    $id = $_SESSION['idUser'];
+if ($conn && !empty((isset($_SESSION['user_id'])))) {
+    $id = $_SESSION['user_id'];
     //* ADD PLAYLIST
     if (isset($_POST['add'])) {
         $playlistName = $_POST['playlistName'];
         $creationDate = date('Y-m-d', date('U'));
-
         $query = "INSERT INTO playlists (name, creation_date, user_id) VALUE ('$playlistName', '$creationDate', '$id')";
         $sendRequest = mysqli_query($conn, $query);
         header('location: playlists.php');
@@ -36,21 +35,9 @@ if ($conn && !empty((isset($_SESSION['idUser'])))) {
     // $sendRequest = mysqli_query($conn, $query);
     // $myIntTable = mysqli_fetch_all($sendRequest, MYSQLI_ASSOC);
 
-    //* COMMANDS TO CLEAN PLAYLISTS CONTENT AND PLAYLISTS - LITTLE HACK TO REFRESH PAGE...
-    // if (isset($_POST['CPC'])) {
-    //     $queryD = "DELETE FROM playlist_content";
-    //     $sendRequestD = mysqli_query($conn, $queryD);
-    //     header('location: playlists.php');
-    // }
-    // if (isset($_POST['CAC'])) {
-    //     $queryD = "DELETE FROM playlists";
-    //     $sendRequestD = mysqli_query($conn, $queryD);
-    //     header('location: playlists.php');
-    // }
-
     mysqli_close($conn);
 
-}elseif(empty((isset($_SESSION['idUser'])))){
+}elseif(empty((isset($_SESSION['user_id'])))){
     header("location: login.php");
     exit();
 }else{
@@ -82,17 +69,27 @@ if ($conn && !empty((isset($_SESSION['idUser'])))) {
         <input type="submit" name="CPC" value="1 - Clean Playlist Content">
         <input type="submit" name="CAC" value="2 - Clean All Playlists">
     </form> -->
-    <?php foreach($myPlaylist as $currentPlaylist) :?>
-        <h4><?= $currentPlaylist['title']?></h4>
-        <ul>
-            <?php foreach($myIntTable as $currentSong) :?>
-                <?php 
-                if ($currentPlaylist['playlist_id'] == $currentSong['plid']) {
-                    echo '<li>'.$currentSong['sgtitle'].'</li>';
-                }
-                ?>
-            <?php endforeach; ?>
-        </ul>
-    <?php endforeach; ?>
+    <div>
+        <?php foreach($myPlaylist as $currentPlaylist) :?>
+            <h4><?= $currentPlaylist['name']?></h4> 
+            <form method="POST">
+                <input type="submit" name="delete" value="delete">
+                <input type="submit" name="edit" value="edit">
+            </form>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- <?php
+        if (isset($_POST['delete'])) {
+            $toDelete = $currentPlaylist['name'];
+            $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
+            $queryD = "DELETE FROM playlists WHERE name='$toDelete'";
+            echo $queryD;
+            // $sendRequestD = mysqli_query($conn, $queryD);
+            // header('location: playlists.php');
+            // mysqli_close($conn);
+        }
+    ?> -->
+
 </body>
 </html>
