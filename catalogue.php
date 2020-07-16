@@ -7,6 +7,7 @@ require('database.php');
 //* DECLARE VAR
 $errors = array('connection'=>'');
 
+
 //* GET THE MOVIES
 $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
 $movies = array();
@@ -98,7 +99,7 @@ if ($conn) {
                 </form>
                 <form method="POST">
                     <?php
-                    if (!empty((isset($_SESSION['user_id'])))) {
+                    if (!empty((isset($_SESSION['user_id']))) && !count($myPlaylist) == 0) {
                         echo '<select name="selectMoviePL" id="">';
                         foreach ($myPlaylist as $currentPlaylist) {
                             echo '<option value="'.$currentPlaylist['playlist_id'].'-'.$movie['movie_id'].'">'.$currentPlaylist['name'].'</option>';
@@ -108,6 +109,7 @@ if ($conn) {
                         echo '<hr>';
                     }else{
                         echo '';
+                        echo '<hr>';
                     }
                     ?>
                </form>

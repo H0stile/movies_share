@@ -27,18 +27,16 @@ if ($conn && !empty((isset($_SESSION['user_id'])))) {
 
     // //* WTF COMMAND TO GET DATA FROM SONGS TABLE AND PLAYLISTS USING INTERMEDIATE TABLE TO GENERATE PLAYLISTS' SONG BY PLAYLIST
     // //? SOURCE : https://dba.stackexchange.com/questions/51637/query-an-intermediate-table-and-join-to-child-table
-    // $query = "SELECT playlist_content.playlist_id, playlist_content.song_id, playlists.playlist_id AS plid, songs.title AS sgtitle FROM playlist_content 
-    // INNER JOIN playlists 
-    // ON playlist_content.playlist_id=playlists.playlist_id
-    // INNER JOIN songs
-    // ON playlist_content.song_id=songs.song_id";
-    // $sendRequest = mysqli_query($conn, $query);
-    // $myIntTable = mysqli_fetch_all($sendRequest, MYSQLI_ASSOC);
+    $query = "SELECT playlist_content.playlist_id, playlist_content.movie_id, playlists.playlist_id AS plid, movies.title AS mgtitle FROM playlist_content 
+    INNER JOIN playlists 
+    ON playlist_content.playlist_id=playlists.playlist_id
+    INNER JOIN movies
+    ON playlist_content.movie_id=movies.movie_id";
+    $sendRequest = mysqli_query($conn, $query);
+    $myIntTable = mysqli_fetch_all($sendRequest, MYSQLI_ASSOC);
 
     if (isset($_POST['delete'])) {
-        $toDelete = $_POST['curList'];
-        // header("location: playlist.php?del=$toDelete");
-        
+        $toDelete = $_POST['curList'];        
         $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
         $queryD = "DELETE FROM playlists WHERE name='$toDelete'";
         $sendRequestD = mysqli_query($conn, $queryD);
@@ -76,19 +74,25 @@ if ($conn && !empty((isset($_SESSION['user_id'])))) {
         <input type="submit" name="add" value="Add">
     </form>
     <h2>Your Playlists</h2>
-    <!-- <form method="POST">
-        <input type="submit" name="CPC" value="1 - Clean Playlist Content">
-        <input type="submit" name="CAC" value="2 - Clean All Playlists">
-    </form> -->
     <div>
         <ul>
             <?php foreach($myPlaylist as $currentPlaylist) :?>
             <li>
                 <form method="POST">
-                    <input type="text" name="curList" value="<?= $currentPlaylist['name']?>" readonly>
+                    <input style="cursor:default" type="text" name="display" value="<?= $currentPlaylist['name']?>" readonly>
+                    <input type="text" name="curList" value="<?= $currentPlaylist['playlist_id']?>" readonly hidden>
                     <input type="submit" name="delete" value="delete">
                     <input type="submit" name="edit" value="edit">
                 </form>
+                <ul>
+                    <?php foreach($myIntTable as $currentMovie) :?>
+                        <?php 
+                        if ($currentPlaylist['playlist_id'] == $currentMovie['plid']) {
+                            echo '<li>'.$currentMovie['mgtitle'].'</li>';
+                        }
+                        ?>
+                    <?php endforeach; ?>
+                </ul>
             </li>
             <?php endforeach; ?>
         </ul>
