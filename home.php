@@ -12,16 +12,6 @@ if($conn){
     $query_genre = 'SELECT COUNT(movies.categ_id), categ.genre FROM movies INNER JOIN categ ON categ.categ_id = movies.categ_id GROUP BY genre';
     $result_genre = mysqli_query($conn, $query_genre);
 
-    $searchTerm = $_POST['searchBar'];
-    $query_search = "SELECT * FROM movies WHERE title LIKE '%".$searchTerm."%' ORDER BY title ASC";
-    $result_search = mysqli_query($conn, $query_search);
-
-    while ($row = $result_search -> fetch_assoc())
-    {
-        $data[] = $row['title'];
-    }
-
-    //echo json_encode($data);
 }
 
 
@@ -48,8 +38,7 @@ if($conn){
     <hr>
     <br>
     
-    <input type="text" id="searchBar" name="searchBar" placeholder="Search a movie...">
-    <div id="resultForm">...</div>
+    <?php include 'search.html'; ?>
     <br>
     <hr>
     <br>
@@ -75,24 +64,7 @@ if($conn){
     }
     ?>
     </section>
-<script>
-    $("#searchBar").keypress(function (){
-        $.ajax({
-            url: 'home.php',
-            type: 'post',
-            data:$("#searchBar").serialize(),
-            success: function(result){
-                console.log('results of AJAX call : ' + result);
-                $('#resultForm').html('<p>' + result + '</p>');
-            },
-            error: function(error){
-                
-                console.log('AJAX Error !');
-            },
 
-        });
-    });
-</script>
 
 
 </body>
