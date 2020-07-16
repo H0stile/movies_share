@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 //  I call the database & navbar files
 require_once ('database.php'); 
 require_once ('navbar.php');
