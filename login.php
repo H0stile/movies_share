@@ -51,7 +51,7 @@ if (isset($_POST['login'])) {
                 $password = '';
                 // var_dump($user);
                 // echo $_SESSION['user_id'];
-                // header("location: account.php");
+                header("location: home.php");
                 // exit();
             }
         }else{

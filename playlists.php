@@ -38,7 +38,7 @@ if ($conn && !empty((isset($_SESSION['user_id'])))) {
     if (isset($_POST['delete'])) {
         $toDelete = $_POST['curList'];        
         $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
-        $queryD = "DELETE FROM playlists WHERE name='$toDelete'";
+        $queryD = "DELETE FROM playlists WHERE playlist_id='$toDelete'";
         $sendRequestD = mysqli_query($conn, $queryD);
         header('location: playlists.php');
         mysqli_close($conn);

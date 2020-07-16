@@ -6,7 +6,7 @@ require('database.php');
 
 //* DECLARE VAR
 $errors = array('connection'=>'');
-
+// var_dump($_SESSION['user_id']);
 
 //* GET THE MOVIES
 $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
@@ -22,10 +22,12 @@ if ($conn) {
     $movies = mysqli_fetch_all($sendRequest, MYSQLI_ASSOC);
 
     //* GET PLAYLIST TO GENERATE HTML
-    $id = $_SESSION['user_id'];
-    $query = "SELECT * FROM playlists WHERE user_id='$id'";
-    $sendRequest = mysqli_query($conn, $query);
-    $myPlaylist = mysqli_fetch_all($sendRequest, MYSQLI_ASSOC);
+    if (isset($_SESSION['user_id'])) {
+        $id = $_SESSION['user_id'];
+        $query = "SELECT * FROM playlists WHERE user_id='$id'";
+        $sendRequest = mysqli_query($conn, $query);
+        $myPlaylist = mysqli_fetch_all($sendRequest, MYSQLI_ASSOC);
+    }
 
     //* INSERT NEW MOVIE IN PLAYLIST
     if (isset($_POST['addPlaylist']) && !empty((isset($_SESSION['user_id'])))) {
@@ -35,7 +37,7 @@ if ($conn) {
         $query = "INSERT INTO playlist_content (playlist_id, movie_id) VALUE ($PL, $MOVIEsel)";
         $sendRequest = mysqli_query($conn, $query);
         }
-
+    mysqli_close($conn);
 }else{
     $errors['connection'] = 'Connection failed to the server, contact us if persist';
 }
