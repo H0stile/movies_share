@@ -105,6 +105,7 @@ if ($conn) {
                         }
                         echo '</select>';
                         echo '<input type="submit" name="addPlaylist" value="Add to playlist">';
+                        echo '<hr>';
                     }else{
                         echo '';
                     }
