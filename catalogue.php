@@ -1,22 +1,39 @@
 <?php
 //* INIT SESSION
 session_start();
-
+require('navbar.php');
 require('database.php');
 
 //* DECLARE VAR
 $errors = array('connection'=>'');
 // var_dump($_SESSION['user_id']);
 
-//* GET THE MOVIES
+//* GET THE ARRAY LENGHT
 $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
-$movies = array();
-$query = "SELECT * FROM movies ORDER BY movie_id ASC";
+$queryLenght = "SELECT COUNT(*) AS nbrMovies FROM movies";
+$sendRequestLenght = mysqli_query($conn, $queryLenght);
+$result = mysqli_fetch_assoc($sendRequestLenght);
 
+//* GET DATA FOR PAGINATION AND DO MAGIC COMPUTATION TO ADD THE GOOD NUMBER OF PAGES DEFINING BY NUMBER OF RESULT PER PAGES
+if (!empty($_GET)) {
+    $page = $_GET['page'];
+    $limit = 3;
+    $offset = $limit*($page-1);
+    $nbrPages = intdiv($result['nbrMovies'], $limit)+($result['nbrMovies']%$limit);
+    $pagination = "LIMIT $limit OFFSET $offset";
+}else{
+    header("location: catalogue.php?page=1");
+}
+
+//* GET THE MOVIES
+$movies = array();
+$query = "SELECT * FROM movies ORDER BY movie_id ASC $pagination";
+
+//* CONNECT TO DB
 if ($conn) {
     if (isset($_POST['sort'])) {
         $sort = $_POST['orderBy'];
-        $query = "SELECT * FROM movies ORDER BY movie_id $sort";
+        $query = "SELECT * FROM movies ORDER BY movie_id $sort $pagination";
     }
     $sendRequest = mysqli_query($conn, $query);
     $movies = mysqli_fetch_all($sendRequest, MYSQLI_ASSOC);
@@ -41,9 +58,17 @@ if ($conn) {
 }else{
     $errors['connection'] = 'Connection failed to the server, contact us if persist';
 }
+
+//* GET AND PUSH THE MOVIE ID INTO URL FOR DETAILS
 if (isset($_GET['details'])) {
     $movieId = $_GET['movieID'];
     header("location: details.php?id=$movieId");
+}
+
+//* SEND TO EDIT MOVIE IF ADMIN AND LOGGED
+if (isset($_GET['edit'])) {
+    $movieId = $_GET['movieID'];
+    header("location: modifymovies.php?id=$movieId");
 }
 
 
@@ -58,9 +83,6 @@ if (isset($_GET['details'])) {
     <title>Movies Share : Catalogue</title>
 </head>
 <body>
-    <?php
-        require('navbar.php');
-    ?>
     <hr>
     <section>
         <form method="POST">
@@ -70,6 +92,11 @@ if (isset($_GET['details'])) {
             </select>
             <input type="submit" name="sort" value="sort">
         </form>
+        <div>
+            <?php for($i=1; $i <= $nbrPages; $i++) : ?>
+                <a href="catalogue.php?page=<?=$i?>"><?=$i?></a>
+            <?php endfor; ?>
+        </div>
     </section>
     <hr>
     <!-- DISPLAYING THE MOVIES -->
@@ -90,7 +117,8 @@ if (isset($_GET['details'])) {
                 <form method="GET">
                     <input type="text" name="movieID" value="<?= $movie['movie_id']?>" hidden readonly>
                     <input type="submit" name="details" value="Details">
-                    <input type="submit" name="edit" value="Edit">
+                    <?= (isset($_SESSION['admin']) && $_SESSION['admin']=='yes') ? '<input type="submit" name="edit" value="Edit">' : '';?> 
+                    
                 </form>
                 <form method="POST">
                     <?php
