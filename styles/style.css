@@ -20,3 +20,43 @@
     justify-content: space-evenly;
     flex-direction: row;
 }
+
+
+#navBar{
+    height: 125px;
+    background-color: rgb(29, 53, 87);
+    padding: 2em;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 5em;
+}
+
+#navBar-content{
+    display: flex;
+    justify-content: space-between;
+}
+
+#navBar a{
+    padding: 0.5em;
+    text-decoration: none;
+    color: rgb(241, 250, 238);
+    margin-right: 1em;
+    font-size: 1.25em;
+}
+#navBar h1{
+    color: rgb(241, 250, 238);
+    font-size: 2em;
+}
+
+#navBar a::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    right: 100%;
+    bottom: 0;
+    background:  rgb(241, 250, 238);
+    height: 4px;
+    transition-property: right;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out;
+}
