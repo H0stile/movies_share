@@ -29,7 +29,7 @@ if (isset($_POST['login'])) {
     if (!empty($username) && !empty($password)) {
         $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
         if ($conn) {
-            $query = "SELECT username, password, user_id FROM users";
+            $query = "SELECT username, password, user_id, admin FROM users";
             $sendRequest = mysqli_query($conn, $query);
             $users = mysqli_fetch_all($sendRequest, MYSQLI_ASSOC);
             mysqli_close($conn);
@@ -40,6 +40,7 @@ if (isset($_POST['login'])) {
         foreach ($users as $user) {
             if ($username === $user['username'] && password_verify($password, $user['password'])) {
                 $logOk = true;
+                $admin = $user['admin'];
             break;
             }
         }
@@ -47,6 +48,7 @@ if (isset($_POST['login'])) {
             $user_id = $user['user_id'];
             if (!isset($_SESSION['user_id'])) {
                 $_SESSION['user_id'] = $user_id;
+                $_SESSION['admin'] = $admin;
                 $username = '';
                 $password = '';
                 // var_dump($user);
