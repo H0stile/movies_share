@@ -1,12 +1,12 @@
 <?php
 
 require_once ('database.php'); 
-//require_once ('navbar.php');
+require_once ('navbar.php');
 
 $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
 
 if($conn){
-    $data=[];
+    
     $query = 'SELECT * FROM movies ORDER BY movie_id DESC LIMIT 4';
     $result = mysqli_query($conn, $query);
     $query_genre = 'SELECT COUNT(movies.categ_id), categ.genre FROM movies INNER JOIN categ ON categ.categ_id = movies.categ_id GROUP BY genre';
