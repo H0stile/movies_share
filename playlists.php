@@ -64,9 +64,7 @@ if ($conn && !empty((isset($_SESSION['user_id'])))) {
     <title>Movies Share : Playlist</title>
 </head>
 <body>
-    <?php
-        require('navbar.php');
-    ?>
+
     <h1>Playlist</h1>
 
     <h2>Create playlist</h2>
