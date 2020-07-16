@@ -6,7 +6,7 @@ require_once ('database.php');
 
 //* DECLARE VAR
 $errors = array('connection'=>'');
-// var_dump($_SESSION['user_id']);
+
 
 //* GET THE ARRAY LENGHT
 $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
@@ -90,7 +90,7 @@ if (isset($_GET['edit'])) {
                 <option value="ASC">Ascending</option>
                 <option value="DESC">Descending</option>
             </select>
-            <input type="submit" name="sort" value="sort">
+            <input type="submit" name="sort" value="Sort">
         </form>
         <div>
             <?php for($i=1; $i <= $nbrPages; $i++) : ?>
