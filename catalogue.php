@@ -1,8 +1,8 @@
 <?php
 //* INIT SESSION
 session_start();
-require('navbar.php');
-require('database.php');
+require_once ('navbar.php');
+require_once ('database.php');
 
 //* DECLARE VAR
 $errors = array('connection'=>'');

@@ -2,7 +2,8 @@
 //* INIT SESSION
 session_start();
 
-require('database.php');
+require_once ('navbar.php');
+require_once ('database.php');
 
 //* DECLARE VAR
 $errors = array('username'=>'', 'password'=>'', 'connection'=>'', 'loginFailed'=>'');

@@ -2,7 +2,8 @@
 //* INIT SESSION
 session_start();
 
-require('database.php');
+require_once ('navbar.php');
+require_once ('database.php');
 
 $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
 
