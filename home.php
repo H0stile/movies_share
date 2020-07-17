@@ -42,19 +42,15 @@ if($conn){
     <section id="home-search">
         <?php include 'search.html'; ?>
     </section>
-    <br>
-    <hr>
-    <br>
-    <section  class="home-genre">
+    
+    <section  id="home-genre">
     <?php 
         while ($genre = mysqli_fetch_assoc($result_genre)){
-            echo '<span> ' . $genre['genre'] . ' ' . '(' . $genre['COUNT(movies.categ_id)'] . ')' . ' </span>';
+            echo '<span style="color:  rgb(241, 250, 238);" > ' . $genre['genre'] . ' ' . '(' . $genre['COUNT(movies.categ_id)'] . ')' . ' </span>';
         }
     ?>
     </section>
-    <br>
-    <hr>
-    <br>
+  
     <section class="movie-card">
     <?php 
     while ($home_movies = mysqli_fetch_assoc($result)){
