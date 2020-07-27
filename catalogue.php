@@ -79,7 +79,7 @@ if (isset($_GET['edit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/catStyle.css">
+    <link rel="stylesheet" href="styles/catStyles.css">
     <title>Movies Share : Catalogue</title>
 </head>
 <body>
