@@ -26,10 +26,14 @@
                 data: $("#searchBar").serialize(),
                 success: function (result) {
                     console.log('results of AJAX call : ' + result);
-                    $('#resultForm').html('<p>' + result + '</p>');
+                    movieArray = JSON.parse(result);
+                    movieArray.forEach(element => {
+                        console.log(element);
+                        // TODO MAKE A CLONE FUNCTION TO GET ALL RESULT
+                        $('#resultForm').html('<p>' + element + '</p>');
+                    });
                 },
                 error: function (error) {
-
                     console.log('AJAX Error !');
                 },
 
