@@ -1,127 +1,152 @@
-*{
-    box-sizing: border-box;
-    margin: 0em;
-    padding: 0em;
-    font-family: 'Roboto', sans-serif;
+* {
+  box-sizing: border-box;
+  margin: 0em;
+  padding: 0em;
+  font-family: "Roboto", sans-serif;
 }
 
-
-.movie-card{
-    display: flex;
-    justify-content: space-evenly;
-    flex-direction: row;
+.movie-card {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
 }
 
-.movie-card img{
-    width: 200px;
+.movie-card img {
+  width: 200px;
 }
 
 #home-genre {
-    padding: 2em;
-    display: flex;
-    justify-content: space-evenly;
-    flex-direction: row;
-    background-color: rgba(29, 53, 87, 0.75);
-    margin-bottom: 100px;
-    
+  padding: 2em;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  background-color: rgba(29, 53, 87, 0.75);
+  margin-bottom: 100px;
 }
 
-
-#navBar{
-    height: 125px;
-    background-color: rgb(29, 53, 87);
-    padding: 2em;
-    font-family: 'Roboto', sans-serif;
-    margin-bottom: 5em;
+#navBar {
+  height: 125px;
+  background-color: rgb(29, 53, 87);
+  padding: 2em;
+  font-family: "Roboto", sans-serif;
+  margin-bottom: 5em;
 }
 
-#navBar-content{
-    display: flex;
-    justify-content: space-between;
+#navBar-content {
+  display: flex;
+  justify-content: space-between;
 }
 
-#navBar a{
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    text-decoration: none;
-    color: rgba(241, 250, 238, 0.5);
-    margin-right: 2em;
-    font-size: 1.25em;
+#navBar a {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  text-decoration: none;
+  color: rgba(241, 250, 238, 0.5);
+  margin-right: 2em;
+  font-size: 1.25em;
 }
-#navBar h1{
-    color: rgb(241, 250, 238);
-    font-size: 2em;
+#navBar h1 {
+  color: rgb(241, 250, 238);
+  font-size: 2em;
 }
 
 #navBar a:hover {
-    color: rgba(241, 250, 238, 0.85);
-    border-bottom: 2px solid rgb(241, 250, 238, 0.85);
-    transition-duration: 0.3s;
+  color: rgba(241, 250, 238, 0.85);
+  border-bottom: 2px solid rgb(241, 250, 238, 0.85);
+  transition-duration: 0.3s;
 }
 
-#home-content-box{
-    font-family: 'Roboto', sans-serif;
-    width: 400px;
-    height: fit-content;
-    margin-left: 200px;
-    margin-bottom: 100px;
+#home-content-box {
+  font-family: "Roboto", sans-serif;
+  width: 400px;
+  height: fit-content;
+  margin-left: 200px;
+  margin-bottom: 100px;
 }
-#home-content-box h1{
-    margin-bottom: 0.1em;
-    font-size: 3em;
+#home-content-box h1 {
+  margin-bottom: 0.1em;
+  font-size: 3em;
 }
-#home-content-box h2{
-    margin-bottom: 2em;
-    padding-bottom: 2em;
-    font-size: 1.25em;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-}
-
-#home-search{
-    background-color:  rgba(29, 53, 87, 0.75);
-    height: 175px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
+#home-content-box h2 {
+  margin-bottom: 2em;
+  padding-bottom: 2em;
+  font-size: 1.25em;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
 }
 
-
-#searchBar{
-    
-    width: 500px;
-    padding: 1em;
-    border: 1px solid rgba(241, 250, 238, 0.5);
-    margin-bottom: 2em;
-}
-#searchBar[type="text"]{
-    font-size: 1.25em;
-    font-family: 'Roboto', sans-serif;
-
-}
-#searchBar::placeholder{
-    color: rgba(0, 0, 0, 0.50);
-
+#home-search {
+  background-color: rgba(29, 53, 87, 0.75);
+  height: 175px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 
-#searchBar:focus{
-    outline: none;
+#searchBar {
+  width: 500px;
+  padding: 1em;
+  border: 1px solid rgba(241, 250, 238, 0.5);
+  margin-bottom: 2em;
+}
+#searchBar[type="text"] {
+  font-size: 1.25em;
+  font-family: "Roboto", sans-serif;
+}
+#searchBar::placeholder {
+  color: rgba(0, 0, 0, 0.5);
 }
 
-.movie-card{
-    text-align: center;
-    margin-bottom: 100px;
-    
-}
-.movie-card img{
-    width: 175px;
-    height: 250px;
-    margin-bottom: 1.5em;
+#searchBar:focus {
+  outline: none;
 }
 
-.movie-card a{
-    text-decoration: none;
-    color: black;
-    font-size: 0.75em;
+.movie-card {
+  text-align: center;
+  margin-bottom: 100px;
+}
+.movie-card img {
+  width: 175px;
+  height: 250px;
+  margin-bottom: 1.5em;
+}
+
+.movie-card a {
+  text-decoration: none;
+  color: black;
+  font-size: 0.75em;
+}
+
+/* ------------------------------- LOGIN / REGISTER PART ---------------------------------------  */
+
+#login-form {
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+}
+#login-form input {
+  width: 400px;
+  padding: 1em;
+  border: 1px solid rgba(241, 250, 238, 0.5);
+  margin-bottom: 2em;
+}
+#login-form input::placeholder {
+  font-size: 1.25em;
+  font-family: "Roboto", sans-serif;
+  color: rgba(0, 0, 0, 0.5);
+}
+#login-form h1 {
+  margin-bottom: 2em;
+}
+
+#login-form #submit-button {
+  width: 150px;
+  font-size: 1em;
+  font-family: "Roboto", sans-serif;
+  background-color: rgba(29, 53, 87);
+  color: white;
+  transform: translate(251px, 0px);
 }

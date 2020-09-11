@@ -2,11 +2,11 @@
 //* INIT SESSION
 session_start();
 
-require_once ('navbar.php');
-require_once ('database.php');
+require_once('navbar.php');
+require_once('database.php');
 
 //* DECLARE VAR
-$errors = array('username'=>'', 'password'=>'', 'connection'=>'', 'loginFailed'=>'');
+$errors = array('username' => '', 'password' => '', 'connection' => '', 'loginFailed' => '');
 $logOk = false;
 $username = '';
 
@@ -15,16 +15,14 @@ if (isset($_POST['login'])) {
     if (!empty($_POST['username'])) {
         $username = trim($_POST['username']);
         $username = strip_tags($username);
-    }else{
+    } else {
         $errors['username'] = 'You need to put a username';
-        
     }
     if (!empty($_POST['password'])) {
         $password = trim($_POST['password']);
         $password = strip_tags($password);
-    }else{
+    } else {
         $errors['password'] = 'You need to put your password';
-        
     }
     //* IF ALL OK AND NOT SOMETHING MISSING CONNECT DB
     if (!empty($username) && !empty($password)) {
@@ -34,7 +32,7 @@ if (isset($_POST['login'])) {
             $sendRequest = mysqli_query($conn, $query);
             $users = mysqli_fetch_all($sendRequest, MYSQLI_ASSOC);
             mysqli_close($conn);
-        }else{
+        } else {
             $errors['connection'] = 'Connection failed to the server, contact us if persist';
         }
         //* FOUND THE USER
@@ -42,7 +40,7 @@ if (isset($_POST['login'])) {
             if ($username === $user['username'] && password_verify($password, $user['password'])) {
                 $logOk = true;
                 $admin = $user['admin'];
-            break;
+                break;
             }
         }
         if ($logOk) {
@@ -57,7 +55,7 @@ if (isset($_POST['login'])) {
                 header("location: home.php");
                 // exit();
             }
-        }else{
+        } else {
             $errors['loginFailed'] = "Login Failed, check your informations";
         }
     }
@@ -66,26 +64,32 @@ if (isset($_POST['login'])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
     <title>Movies Share : Login</title>
 </head>
+
 <body>
 
     <?php
-        include_once 'navbar.php';
+    include_once 'navbar.php';
     ?>
-    <h1>Login page</h1>
-    <form method="POST">
-        <input type="text" name="username" placeholder="Username (email)" value="<?= $username?>">
-        <input type="password" name="password" placeholder="Password">
-        <input type="submit" name="login" value="Login">
-    </form>
+    <section id="login-form">
+        <h1>Login</h1>
+        <form method="POST">
+            <input type="text" name="username" placeholder="Username (email)" value="<?= $username ?>">
+            <input type="password" name="password" placeholder="Password">
+            <input type="submit" name="login" value="Login" id="submit-button">
+        </form>
+    </section>
     <section>
-        <?php foreach($errors as $error) :?>
-            <p><?= $error?></p>
-        <?php endforeach?>
+        <?php foreach ($errors as $error) : ?>
+            <p><?= $error ?></p>
+        <?php endforeach ?>
     </section>
 </body>
+
 </html>
