@@ -90,6 +90,10 @@ if (isset($_POST['login'])) {
             <p><?= $error ?></p>
         <?php endforeach ?>
     </section>
+    <footer id="footer">
+        <h5>Project for NumericALL bootcamp - 2020</h5>
+        <h5>Made by Matthieu Barbier & Charles Wilmart<h5>
+    </footer>
 </body>
 
 </html>

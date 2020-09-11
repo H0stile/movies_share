@@ -1,47 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/style.css" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
+    <section id="container">
+      <input
+        type="text"
+        id="searchBar"
+        name="searchBar"
+        placeholder="Search a movie..."
+      />
+      <div id="resultForm"></div>
+    </section>
 
-
-    <input type="text" id="searchBar" name="searchBar" placeholder="Search a movie...">
-    <div id="resultForm"></div>
-
-
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
-        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.min.js"
+      integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+      crossorigin="anonymous"
+    ></script>
     <script>
-        $("#searchBar").keyup(function () {
-            $.ajax({
-                url: 'search.php',
-                type: 'post',
-                data: $("#searchBar").serialize(),
-                success: function (result) {
-                    $('#resultForm').html("");
-                    try {
-                        resultMovies = JSON.parse(result);
-                        $.each(resultMovies, function (i, item) {
-                            // MODIFY ICI AUX BESOINS
-                            $('#resultForm').append('<p>' + resultMovies[i] + '</p>');
-                        })
-                    }
-                    catch{ };
-                },
-                error: function (error) {
-
-                    console.log('AJAX Error !');
-                },
-
-            });
+      $("#searchBar").keyup(function () {
+        $.ajax({
+          url: "search.php",
+          type: "post",
+          data: $("#searchBar").serialize(),
+          success: function (result) {
+            $("#resultForm").html("");
+            try {
+              resultMovies = JSON.parse(result);
+              $.each(resultMovies, function (i, item) {
+                // MODIFY ICI AUX BESOINS
+                $("#resultForm").append(
+                  '<div class="search-result">' + resultMovies[i] + "</div>"
+                );
+              });
+            } catch {}
+          },
+          error: function (error) {
+            console.log("AJAX Error !");
+          },
         });
+      });
     </script>
-</body>
-
+  </body>
 </html>

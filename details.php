@@ -1,24 +1,23 @@
 <?php
 session_start();
-require_once ('database.php'); 
-require_once ('navbar.php');
+require_once('database.php');
+require_once('navbar.php');
 
 $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATA, DB_PORT);
 
-if(isset($_GET['id'])){
+if (isset($_GET['id'])) {
     $movie_id = (int) $_GET['id'];
-}else{
-    $movie_id = $_GET['id']=1;
+} else {
+    $movie_id = $_GET['id'] = 1;
 }
 
 
 
-if($conn){
-    if($movie_id > 0){
+if ($conn) {
+    if ($movie_id > 0) {
         $query = "SELECT * FROM movies INNER JOIN categ ON movies.categ_id = categ.categ_id WHERE movies.movie_id = $movie_id";
-        $result= mysqli_query($conn, $query);
+        $result = mysqli_query($conn, $query);
         $movie = mysqli_fetch_assoc($result);
-
     } else {
         echo 'Something went wrong...';
     }
@@ -35,6 +34,7 @@ mysqli_close($conn);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,11 +42,12 @@ mysqli_close($conn);
     <link rel="stylesheet" href="styles/style.css">
     <title>Document</title>
 </head>
+
 <body>
-<section>
-    <?php 
-   
-   
+    <section id="detail-main">
+        <?php
+
+
 
         echo '<div>';
         echo '<img src="images/' . $movie['poster'] . '" alt="">' . '<br>';
@@ -57,9 +58,14 @@ mysqli_close($conn);
         echo '<p>' . $movie['synopsis'] . '</p>' . '<br>';
         echo '<p>' . $movie['genre'] . '</p>' . '<br>';
         echo '</div>';
- 
-    
-    ?>
-</section>
+
+
+        ?>
+    </section>
+    <footer id="footer">
+        <h5>Project for NumericALL bootcamp - 2020</h5>
+        <h5>Made by Matthieu Barbier & Charles Wilmart<h5>
+    </footer>
 </body>
+
 </html>

@@ -85,6 +85,7 @@
 }
 
 #searchBar {
+  position: static;
   width: 500px;
   padding: 1em;
   border: 1px solid rgba(241, 250, 238, 0.5);
@@ -149,4 +150,123 @@
   background-color: rgba(29, 53, 87);
   color: white;
   transform: translate(251px, 0px);
+}
+
+/* ------------------------------- SEARCH PART ---------------------------------------  */
+
+.search-result {
+  width: 500px;
+  padding-left: 1em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  border: 1px solid rgba(241, 250, 238, 0.5);
+  background-color: white;
+  font-size: 1.25em;
+  font-family: "Roboto", sans-serif;
+  color: rgba(0, 0, 0, 0.5);
+  transform: translate(0px, -50px);
+  z-index: 6;
+}
+
+#container {
+  position: relative;
+}
+
+#resultForm {
+  position: absolute;
+}
+
+/* ----------------------------------------------- footer ----------------------------------------------- */
+
+#footer {
+  margin-top: 200px;
+  height: 200px;
+  background-color: rgba(29, 53, 87);
+  color: rgba(255, 255, 255, 0.75);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#footer h5 {
+  font-family: "Roboto", sans-serif;
+  padding-left: 1em;
+  margin-bottom: 1em;
+}
+
+/* ----------------------------------------------- catalogue ----------------------------------------------- */
+#sort-by {
+  width: 600px;
+  margin-bottom: 2em;
+  padding-left: 5em;
+}
+#sort-by #submit-button {
+  width: fit-content;
+  font-size: 1em;
+  font-family: "Roboto", sans-serif;
+  background-color: rgba(29, 53, 87);
+  color: white;
+  transform: translate(251px, 0px);
+  border: none;
+  padding: 1em;
+  padding-left: 2em;
+  padding-right: 2em;
+  transform: translate(5px, 0px);
+}
+#sort-by select {
+  width: 400px;
+  padding: 1em;
+  border: 1px solid rgba(241, 250, 238, 0.5);
+  margin-bottom: 2em;
+  font-size: 1em;
+  font-family: "Roboto", sans-serif;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+#sort-by option {
+  font-size: 1em;
+  font-family: "Roboto", sans-serif;
+  color: rgba(0, 0, 0, 0.5);
+}
+#sort-by a {
+  padding-left: 1em;
+}
+#catalog-content {
+  width: 60%;
+  margin-top: 5em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.movie-detail-card {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 3em;
+}
+.side-content {
+  padding-left: 3em;
+}
+.side-content p {
+  margin-top: 10px;
+}
+.side-content button {
+  margin-top: 10px;
+}
+
+.sub-btn-cat {
+  font-family: "Roboto", sans-serif;
+  background-color: rgba(29, 53, 87);
+  color: white;
+  margin-top: 10px;
+  border: none;
+  padding: 0.5em;
+}
+
+#detail-main {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+#detail-main img {
+  height: 500px;
 }

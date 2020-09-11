@@ -1,11 +1,11 @@
 <?php
 //* INIT SESSION
 session_start();
-require_once ('navbar.php');
-require_once ('database.php');
+require_once('navbar.php');
+require_once('database.php');
 
 //* DECLARE VAR
-$errors = array('connection'=>'');
+$errors = array('connection' => '');
 
 
 //* GET THE ARRAY LENGHT
@@ -18,10 +18,10 @@ $result = mysqli_fetch_assoc($sendRequestLenght);
 if (!empty($_GET)) {
     $page = $_GET['page'];
     $limit = 3;
-    $offset = $limit*($page-1);
-    $nbrPages = intdiv($result['nbrMovies'], $limit)+($result['nbrMovies']%$limit);
+    $offset = $limit * ($page - 1);
+    $nbrPages = intdiv($result['nbrMovies'], $limit) + ($result['nbrMovies'] % $limit);
     $pagination = "LIMIT $limit OFFSET $offset";
-}else{
+} else {
     header("location: catalogue.php?page=1");
 }
 
@@ -53,9 +53,9 @@ if ($conn) {
         $MOVIEsel = explode('-', $pushmovie2PL)[1];
         $query = "INSERT INTO playlist_content (playlist_id, movie_id) VALUE ($PL, $MOVIEsel)";
         $sendRequest = mysqli_query($conn, $query);
-        }
+    }
     mysqli_close($conn);
-}else{
+} else {
     $errors['connection'] = 'Connection failed to the server, contact us if persist';
 }
 
@@ -76,69 +76,78 @@ if (isset($_GET['edit'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/catStyles.css">
+    <link rel="stylesheet" href="styles/style.css">
     <title>Movies Share : Catalogue</title>
 </head>
+
 <body>
-    <hr>
-    <section>
+    <!-- <hr> -->
+    <section id="sort-by">
         <form method="POST">
-            <select name="orderBy" >
+            <select name="orderBy">
                 <option value="ASC">Ascending</option>
                 <option value="DESC">Descending</option>
             </select>
-            <input type="submit" name="sort" value="Sort">
+            <input type="submit" name="sort" value="Sort" id="submit-button">
         </form>
         <div>
-            <?php for($i=1; $i <= $nbrPages; $i++) : ?>
-                <a href="catalogue.php?page=<?=$i?>"><?=$i?></a>
+            <?php for ($i = 1; $i <= $nbrPages; $i++) : ?>
+                <a href="catalogue.php?page=<?= $i ?>"><?= $i ?></a>
             <?php endfor; ?>
         </div>
     </section>
-    <hr>
+    <!-- <hr> -->
     <!-- DISPLAYING THE MOVIES -->
-    <section>
-        <?php foreach($movies as $movie) : ?>
-            <div>
-                <img src="images/<?= $movie['poster']?>" width="100">
-                <div>
-                    <p>#<?= $movie['movie_id']?> <?= $movie['title']?></p>
-                    <p>Release date : <?= $movie['release_date']?></p>
-                    <p>Synopsis : 
-                    <?php if (strlen($movie['synopsis']) > 30) {
-                        $synopsis = substr($movie['synopsis'], 0, 27).'...';
-                        echo $synopsis;
-                    }?>
-                    </p>
-                </div>
-                <form method="GET">
-                    <input type="text" name="movieID" value="<?= $movie['movie_id']?>" hidden readonly>
-                    <input type="submit" name="details" value="Details">
-                    <?= (isset($_SESSION['admin']) && $_SESSION['admin']=='yes') ? '<input type="submit" name="edit" value="Edit">' : '';?> 
-                    
-                </form>
-                <form method="POST">
-                    <?php
-                    if (!empty((isset($_SESSION['user_id']))) && !count($myPlaylist) == 0) {
-                        echo '<select name="selectMoviePL" id="">';
-                        foreach ($myPlaylist as $currentPlaylist) {
-                            echo '<option value="'.$currentPlaylist['playlist_id'].'-'.$movie['movie_id'].'">'.$currentPlaylist['name'].'</option>';
-                        }
-                        echo '</select>';
-                        echo '<input type="submit" name="addPlaylist" value="Add to playlist">';
-                        echo '<hr>';
-                    }else{
-                        echo '';
-                        echo '<hr>';
-                    }
-                    ?>
-               </form>
-            </div>
-        <?php endforeach; ?>
-    </section>
+    <section id="catalog-content">
+        <section>
+            <?php foreach ($movies as $movie) : ?>
+                <div class="movie-detail-card">
+                    <img src="images/<?= $movie['poster'] ?>" width="100">
+                    <section class="side-content">
+                        <div>
+                            <p>#<?= $movie['movie_id'] ?> <?= $movie['title'] ?></p>
+                            <p>Release date : <?= $movie['release_date'] ?></p>
+                            <p>Synopsis :
+                                <?php if (strlen($movie['synopsis']) > 30) {
+                                    $synopsis = substr($movie['synopsis'], 0, 27) . '...';
+                                    echo $synopsis;
+                                } ?>
+                            </p>
+                        </div>
+                        <form method="GET">
+                            <input type="text" name="movieID" value="<?= $movie['movie_id'] ?>" hidden readonly>
+                            <input type="submit" name="details" value="Details" class="sub-btn-cat">
+                            <?= (isset($_SESSION['admin']) && $_SESSION['admin'] == 'yes') ? '<input type="submit" name="edit" value="Edit">' : ''; ?>
 
+                        </form>
+                        <form method="POST">
+                            <?php
+                            if (!empty((isset($_SESSION['user_id']))) && !count($myPlaylist) == 0) {
+                                echo '<select name="selectMoviePL" id="">';
+                                foreach ($myPlaylist as $currentPlaylist) {
+                                    echo '<option value="' . $currentPlaylist['playlist_id'] . '-' . $movie['movie_id'] . '">' . $currentPlaylist['name'] . '</option>';
+                                }
+                                echo '</select>';
+                                echo '<input type="submit" name="addPlaylist" value="Add to playlist" class="sub-btn-cat">';
+                                // echo '<hr>';
+                            } else {
+                                echo '';
+                                // echo '<hr>';
+                            }
+                            ?>
+                        </form>
+                </div>
+            <?php endforeach; ?>
+        </section>
+    </section>
+    <footer id="footer">
+        <h5>Project for NumericALL bootcamp - 2020</h5>
+        <h5>Made by Matthieu Barbier & Charles Wilmart<h5>
+    </footer>
 </body>
+
 </html>
